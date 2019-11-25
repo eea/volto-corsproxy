@@ -14,4 +14,8 @@ if (module.hot) {
 }
 ```
 
-Configure the allowed_cors_destinations in config.settings
+In the ``config.js`` file, add a new key to the ``settings`` variable, named ``allowed_cors_destinations``. This is an array of strings, each string being a hostname that will be allowed as proxy destination. For example, to allow embedding files from the eea.europa.eu domain, set the settings like:
+
+```
+settings.allowed_cors_destinations = ['eea.europa.eu']
+```
