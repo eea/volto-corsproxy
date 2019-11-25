@@ -32,8 +32,10 @@ import ErrorPage from '@plone/volto/error';
 import languages from '@plone/volto/constants/Languages';
 import configureStore from '@plone/volto/store';
 
-// import { settings } from './config';
-// import request from 'request';
+import { settings } from '~/config';
+import request from 'request';
+
+const url = require('url');
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
 
@@ -45,49 +47,62 @@ const locales = {
 };
 
 const server = express();
+const allowed_cors_destinations = settings.allowed_cors_destinations || [];
+
 server
   .disable('x-powered-by')
   .use(express.static(process.env.RAZZLE_PUBLIC_DIR))
 
-  // .all('/*', function(req, res, next) {
-  //   // console.log('all req', req.path);
-  //   const match = req.path.match(/\/cors-proxy\/(.*)/);
-  //   if (match && match.length === 2) {
-  //     console.log('CORS method on path', req.path);
-  //
-  //     const targetURL = match[1];
-  //     //
-  //     // Set CORS headers: allow all origins, methods, and headers:
-  //     // you may want to lock this down in a production environment
-  //     res.header(
-  //       'Access-Control-Allow-Origin',
-  //       settings.allow_cors_origin || '*',
-  //     );
-  //     res.header('Access-Control-Allow-Methods', 'GET');
-  //     // res.header('Access-Control-Allow-Headers', '');
-  //
-  //     if (req.method === 'OPTIONS') {
-  //       res.send(); // CORS Preflight
-  //     } else {
-  //       request(
-  //         {
-  //           url: targetURL,
-  //           method: req.method,
-  //           json: req.body,
-  //           headers: { Authorization: req.header('Authorization') },
-  //         },
-  //         function(error, response, body) {
-  //           if (error) {
-  //             console.error('error: ' + response.statusCode);
-  //           }
-  //           //                console.log(body);
-  //         },
-  //       ).pipe(res);
-  //     }
-  //   } else {
-  //     next();
-  //   }
-  // })
+  .all('/*', function(req, res, next) {
+    const match = req.path.match(/\/cors-proxy\/(.*)/);
+    if (match && match.length === 2) {
+      // console.log('CORS method on path', req.path);
+
+      const targetURL = match[1];
+      const parsed = url.parse(targetURL);
+
+      if (allowed_cors_destinations.indexOf(parsed.host) === -1) {
+        res.set({
+          'Cache-Control': 'public, max-age=60, no-transform',
+        });
+
+        res
+          .status(500)
+          .send(`<!doctype html><html><body>Error, not allowed</body></html>`);
+        return;
+      }
+
+      // Set CORS headers: allow all origins, methods, and headers:
+      // you may want to lock this down in a production environment
+      res.header(
+        'Access-Control-Allow-Origin',
+        settings.allow_cors_origin || '*',
+      );
+      res.header('Access-Control-Allow-Methods', 'GET');
+      // res.header('Access-Control-Allow-Headers', '');
+
+      if (req.method === 'OPTIONS') {
+        res.send(); // CORS Preflight
+      } else {
+        request(
+          {
+            url: targetURL,
+            method: req.method,
+            json: req.body,
+            headers: { Authorization: req.header('Authorization') },
+          },
+          function(error, response, body) {
+            if (error) {
+              console.error('error: ' + response.statusCode);
+            }
+            //                console.log(body);
+          },
+        ).pipe(res);
+      }
+    } else {
+      next();
+    }
+  })
 
   .get('/*', (req, res) => {
     plugToRequest(req, res);
