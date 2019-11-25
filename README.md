@@ -13,3 +13,5 @@ if (module.hot) {
   reloadServer();
 }
 ```
+
+Configure the allowed_cors_destinations in config.settings
