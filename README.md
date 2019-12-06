@@ -14,4 +14,6 @@ if (module.hot) {
 }
 ```
 
-Configure the allowed_cors_destinations in config.settings
+Configure the allowed_cors_destinations in config.settings or provide a system
+environment variable named ALLOWED_CORS_DESTINATIONS, which is a list of comma
+separated hostnames.

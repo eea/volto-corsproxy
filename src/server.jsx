@@ -47,7 +47,17 @@ const locales = {
 };
 
 const server = express();
-const allowed_cors_destinations = settings.allowed_cors_destinations || [];
+const env_destinations = String.split(
+  ',',
+  process.env.ALLOWED_CORS_DESTINATIONS || '',
+)
+  .map(s => String.trim(s))
+  .filter(s => s.length > 0);
+
+const allowed_cors_destinations = [
+  ...(settings.allowed_cors_destinations || []),
+  ...env_destinations,
+];
 
 server
   .disable('x-powered-by')
@@ -56,11 +66,10 @@ server
   .all('/*', function(req, res, next) {
     const match = req.path.match(/\/cors-proxy\/(.*)/);
     if (match && match.length === 2) {
-      // console.log('CORS method on path', req.path);
-
       const targetURL = match[1];
       const parsed = url.parse(targetURL);
 
+      // TODO: use regex matching
       if (allowed_cors_destinations.indexOf(parsed.host) === -1) {
         res.set({
           'Cache-Control': 'public, max-age=60, no-transform',
