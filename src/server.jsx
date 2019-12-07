@@ -47,10 +47,10 @@ const locales = {
 };
 
 const server = express();
-const env_destinations = String.split(
-  ',',
+const env_destinations = (
   process.env.ALLOWED_CORS_DESTINATIONS || '',
 )
+  .split(',')
   .map(s => String.trim(s))
   .filter(s => s.length > 0);
 
