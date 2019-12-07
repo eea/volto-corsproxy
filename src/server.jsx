@@ -47,11 +47,9 @@ const locales = {
 };
 
 const server = express();
-const env_destinations = (
-  process.env.ALLOWED_CORS_DESTINATIONS || '',
-)
+const env_destinations = (process.env.ALLOWED_CORS_DESTINATIONS || '')
   .split(',')
-  .map(s => String.trim(s))
+  .map(s => s.trim())
   .filter(s => s.length > 0);
 
 const allowed_cors_destinations = [
