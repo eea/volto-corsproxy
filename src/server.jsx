@@ -26,6 +26,9 @@ import {
   generateSitemap,
   getAPIResourceWithAuth,
 } from '@plone/volto/helpers';
+//  TODO Mihai: remove this when route change animation is implemented in volto
+
+import { AnimationWrapper } from '~/helpers'
 
 import userSession from '@plone/volto/reducers/userSession/userSession';
 import ErrorPage from '@plone/volto/error';
@@ -176,7 +179,10 @@ server
           const markup = renderToString(
             <Provider store={store}>
               <StaticRouter context={context} location={req.url}>
-                <ReduxAsyncConnect routes={routes} helpers={api} />
+              {/* //  TODO Mihai: remove this when route change animation is implemented in volto */}
+              <AnimationWrapper>
+                  <ReduxAsyncConnect routes={routes} helpers={api} />
+                </AnimationWrapper>
               </StaticRouter>
             </Provider>,
           );
