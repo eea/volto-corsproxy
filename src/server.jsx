@@ -21,11 +21,11 @@ import enLocale from '@plone/volto/../locales/en.json';
 
 import {
   Html,
-  Api,
   persistAuthToken,
   generateSitemap,
   getAPIResourceWithAuth,
 } from '@plone/volto/helpers';
+import { Api } from '~/customizations/volto/helpers';
 //  TODO Mihai: remove this when route change animation is implemented in volto
 
 import { AnimationWrapper } from '~/helpers'
