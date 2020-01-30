@@ -93,8 +93,8 @@ function handleAll(req, res, next) {
         {
           url: targetURL,
           method: req.method,
-          json: req.body,
-          headers: { Authorization: req.header('Authorization') },
+          // json: req.body,
+          // headers: { Authorization: req.header('Authorization') },
         },
         function(error, response, body) {
           if (error) {
