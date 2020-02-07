@@ -18,6 +18,7 @@ import routes from '~/routes';
 import nlLocale from '@plone/volto/../locales/nl.json';
 import deLocale from '@plone/volto/../locales/de.json';
 import enLocale from '@plone/volto/../locales/en.json';
+import { detect } from 'detect-browser';
 
 import {
   Html,
@@ -121,6 +122,7 @@ server
 
     const url = req.originalUrl || req.url;
     const location = parseUrl(url);
+    const browserdetect = detect(req.headers['user-agent']);
 
     const lang = new locale.Locales(
       cookie.load('lang') || req.headers['accept-language'],
@@ -138,6 +140,7 @@ server
         locale: lang,
         messages: locales[lang],
       },
+      browserdetect
     };
     const history = createMemoryHistory({
       initialEntries: [req.url],
