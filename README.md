@@ -35,6 +35,12 @@ or:
 RAZZLE_ALLOWED_CORS_DESTINATIONS=eea.europa.eu,plone.org yarn start
 ```
 
+As a convenience feature for dealing with third-party API endpoints, there
+a new action available, `getProxiedExternalContent`, somewhat similar to
+Volto's `getContent`. Call it like: `getProxiedExternalContent(thirdpartyurl)`
+and it will make that async content available in the Redux content reducer, at
+`store.content.subrequests[thirdpartyurl]`.
+
 ## Getting started
 
 1. Create new volto project if you don't already have one:
