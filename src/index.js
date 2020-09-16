@@ -17,7 +17,7 @@ export default (config) => {
       logLevel: 'silent',
       followRedirects: true,
       changeOrigin: true,
-      target: 'http://it-does-not-matter-what-it-says.com',
+      target: 'http://example.com',
       router: (req) => {
         const allowed_cors_destinations = [
           ...(settings.allowed_cors_destinations || []),
