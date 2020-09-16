@@ -10,29 +10,38 @@ export default (config) => {
       .map((s) => s.trim())
       .filter((s) => s.length > 0);
 
-    const allowed_cors_destinations = [
-      ...(settings.allowed_cors_destinations || []),
-      ...env_destinations,
-    ];
-
     const proxy = require('http-proxy-middleware');
     const express = require('express');
     const middleware = express.Router();
     const options = {
+      logLevel: 'silent',
+      followRedirects: true,
       changeOrigin: true,
       target: 'http://it-does-not-matter-what-it-says.com',
       router: (req) => {
+        const allowed_cors_destinations = [
+          ...(settings.allowed_cors_destinations || []),
+          ...env_destinations,
+        ];
+
         const url = new URL(req.params['0']);
-        const target = `${url.protocol}//${url.hostname}${
-          url.port ? `:${url.port}` : ''
-        }`;
-        return allowed_cors_destinations.indexOf(target) > -1 ? target : null;
+        const target =
+          allowed_cors_destinations.indexOf(url.hostname) > -1
+            ? `${url.protocol}//${url.hostname}${
+                url.port ? `:${url.port}` : ''
+              }`
+            : null;
+        return target;
       },
       pathRewrite: (path, req) => {
         const reqpath = path.slice(corsProxyPath.length + 1);
         const url = new URL(reqpath);
         const rewpath = `${url.pathname}${url.search || ''}`;
         return rewpath;
+      },
+      onError: (err, req, res) => {
+        console.error('proxy error', err);
+        throw new Error(err);
       },
     };
     middleware.all(`${corsProxyPath}/*`, proxy.createProxyMiddleware(options));

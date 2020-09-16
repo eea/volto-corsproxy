@@ -6,13 +6,21 @@ export function getProxiedExternalContent(
   request = {},
   subrequest = null,
 ) {
-  const { corsProxyPath = '/cors-proxy' } = settings;
+  const { corsProxyPath = '/cors-proxy', host, port } = settings;
+
+  const base = __SERVER__
+    ? `http://${host}:${port}`
+    : `${window.location.protocol}//${window.location.host}`;
+
+  const path = `${base}${corsProxyPath}/${url}`;
+
   return {
     type: GET_CONTENT,
     subrequest: subrequest || url,
     request: {
       op: 'get',
-      path: `${corsProxyPath}/${url}`,
+      path,
+      headers: { Authorization: null, Cookie: null },
       ...request,
     },
   };
