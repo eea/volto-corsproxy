@@ -50,8 +50,8 @@ const locales = {
 const server = express();
 const env_destinations = (process.env.ALLOWED_CORS_DESTINATIONS || '')
   .split(',')
-  .map(s => s.trim())
-  .filter(s => s.length > 0);
+  .map((s) => s.trim())
+  .filter((s) => s.length > 0);
 
 const allowed_cors_destinations = [
   ...(settings.allowed_cors_destinations || []),
@@ -84,6 +84,7 @@ function handleAll(req, res, next) {
       'Access-Control-Allow-Origin',
       settings.allow_cors_origin || '*',
     );
+
     res.header('Access-Control-Allow-Methods', 'GET');
     // res.header('Access-Control-Allow-Headers', '');
 
@@ -97,7 +98,7 @@ function handleAll(req, res, next) {
           // json: req.body,
           // headers: { Authorization: req.header('Authorization') },
         },
-        function(error, response, body) {
+        function (error, response, body) {
           if (error) {
             console.error('error: ' + response.statusCode);
           }
@@ -140,7 +141,7 @@ server
         locale: lang,
         messages: locales[lang],
       },
-      browserdetect
+      browserdetect,
     };
     const history = createMemoryHistory({
       initialEntries: [req.url],
@@ -152,7 +153,7 @@ server
     persistAuthToken(store);
 
     if (req.path === '/sitemap.xml.gz') {
-      generateSitemap(req).then(sitemap => {
+      generateSitemap(req).then((sitemap) => {
         res.set('Content-Type', 'application/x-gzip');
         res.set('Content-Encoding', 'gzip');
         res.set('Content-Disposition', 'attachment; filename="sitemap.xml.gz"');
@@ -162,7 +163,7 @@ server
       req.path.match(/(.*)\/@@images\/(.*)/) ||
       req.path.match(/(.*)\/@@download\/(.*)/)
     ) {
-      getAPIResourceWithAuth(req).then(resource => {
+      getAPIResourceWithAuth(req).then((resource) => {
         res.set('Content-Type', resource.headers['content-type']);
         if (resource.headers['content-disposition']) {
           res.set(
@@ -196,7 +197,7 @@ server
             );
           }
         })
-        .catch(error => {
+        .catch((error) => {
           const errorPage = <ErrorPage message={error.message} />;
 
           if (process.env.SENTRY_DSN) {

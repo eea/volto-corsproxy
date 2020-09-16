@@ -1,24 +1,16 @@
 {
-  "name": "volto-corsproxy",
-  "version": "1.0.0",
-  "description": "A replacement for the Volto server providing a builtin CORS proxy",
-  "main": "index.js",
+  "name": "@eeacms/volto-corsproxy",
+  "version": "0.1.0",
+  "description": "volto-corsproxy: Volto add-on",
+  "main": "src/index.js",
+  "repository": "https://github.com/eea/volto-corsproxy",
+  "author": "European Environment Agency: IDM2 A-Team",
+  "license": "MIT",
+  "devDependencies": {
+    "release-it": "*"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eea/volto-corsproxy.git"
-  },
-  "keywords": [
-    "Volto",
-    "Plone",
-    "CORS"
-  ],
-  "author": "Tiberiu Ichim",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/eea/volto-corsproxy/issues"
-  },
-  "homepage": "https://github.com/eea/volto-corsproxy#readme"
+    "release": "release-it",
+    "bootstrap": "./bootstrap"
+  }
 }
