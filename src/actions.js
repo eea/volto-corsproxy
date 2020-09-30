@@ -20,8 +20,8 @@ export function getProxiedExternalContent(
     request: {
       op: 'get',
       path,
-      headers: { Authorization: null, Cookie: null },
       ...request,
+      headers: { ...request.headers ,Authorization: null, Cookie: null },
     },
   };
 }
