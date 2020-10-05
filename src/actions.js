@@ -21,7 +21,7 @@ export function getProxiedExternalContent(
       op: 'get',
       path,
       ...request,
-      headers: { ...request.headers ,Authorization: null, Cookie: null },
+      headers: { ...request?.headers, Authorization: null, Cookie: null },
     },
   };
 }
