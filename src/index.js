@@ -17,7 +17,7 @@ export default (config) => {
       logLevel: 'silent',
       followRedirects: true,
       changeOrigin: true,
-      target: 'http://example.com',
+      target: 'http://volto-cors-proxy.eea.europa.eu',
       router: (req) => {
         const allowed_cors_destinations = [
           ...(settings.allowed_cors_destinations || []),
