@@ -1,3 +1,4 @@
+/* eslint no-console: ["error", { allow: ["error"] }] */
 export default (config) => {
   const { settings } = config;
   const corsProxyPath = settings.corsProxyPath || '/cors-proxy';
