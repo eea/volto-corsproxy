@@ -1,6 +1,7 @@
 # volto-corsproxy
-
 [![Releases](https://img.shields.io/github/v/release/eea/volto-corsproxy)](https://github.com/eea/volto-corsproxy/releases)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-corsproxy%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-corsproxy/job/master/display/redirect)
+[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-corsproxy%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-corsproxy/job/develop/display/redirect)
 
 [Volto](https://github.com/plone/volto) add-on
 
@@ -60,7 +61,7 @@ and it will make that async content available in the Redux content reducer, at
    ],
 
    "dependencies": {
-       "@eeacms/volto-corsproxy": "github:eea/volto-corsproxy#0.1.0"
+       "@eeacms/volto-corsproxy": "^0.1.0"
    }
    ```
 

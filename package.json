@@ -1,16 +1,28 @@
 {
   "name": "@eeacms/volto-corsproxy",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "description": "volto-corsproxy: Volto add-on",
   "main": "src/index.js",
-  "repository": "https://github.com/eea/volto-corsproxy",
   "author": "European Environment Agency: IDM2 A-Team",
   "license": "MIT",
+  "homepage": "https://github.com/eea/volto-corsproxy",
+  "keywords": [
+    "volto-addon",
+    "volto-corsproxy",
+    "volto-cors",
+    "volto",
+    "plone",
+    "react"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:eea/volto-corsproxy.git"
+  },
   "devDependencies": {
     "release-it": "*"
   },
   "scripts": {
     "release": "release-it",
-    "bootstrap": "./bootstrap"
+    "bootstrap": "node bootstrap"
   }
 }
