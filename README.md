@@ -48,12 +48,14 @@ and it will make that async content available in the Redux content reducer, at
 1. Create new volto project if you don't already have one:
 
    ```
-   $ npm install -g @plone/create-volto-app
-   $ create-volto-app my-volto-project
+   $ npm install -g yo @plone/generator-volto
+   $ yo @plone/volto my-volto-project --addon @eeacms/volto-corsproxy
+
    $ cd my-volto-project
+   $ yarn add -W @eeacms/volto-corsproxy
    ```
 
-1. Update `package.json`:
+1. If you already have a volto project, just update `package.json`:
 
    ```JSON
    "addons": [
@@ -61,7 +63,7 @@ and it will make that async content available in the Redux content reducer, at
    ],
 
    "dependencies": {
-       "@eeacms/volto-corsproxy": "^0.1.0"
+       "@eeacms/volto-corsproxy": "^1.0.0"
    }
    ```
 
