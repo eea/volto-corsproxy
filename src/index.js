@@ -3,14 +3,18 @@ export default (config) => {
   const { settings } = config;
   const corsProxyPath = settings.corsProxyPath || '/cors-proxy';
 
-  if (__SERVER__) {
-    const env_destinations = (
-      process.env.RAZZLE_ALLOWED_CORS_DESTINATIONS || ''
-    )
-      .split(',')
-      .map((s) => s.trim())
-      .filter((s) => s.length > 0);
+  const env_destinations = (process.env.RAZZLE_ALLOWED_CORS_DESTINATIONS || '')
+    .split(',')
+    .map((s) => s.trim())
+    .filter((s) => s.length > 0);
 
+  // Update allowed_cors_destinations with RAZZLE_ALLOWED_CORS_DESTINATIONS
+  config.settings.allowed_cors_destinations = [
+    ...(config.settings.allowed_cors_destinations || []),
+    ...env_destinations,
+  ];
+
+  if (__SERVER__) {
     const proxy = require('http-proxy-middleware');
     const express = require('express');
     const middleware = express.Router();
@@ -21,8 +25,7 @@ export default (config) => {
       target: 'http://volto-cors-proxy.eea.europa.eu',
       router: (req) => {
         const allowed_cors_destinations = [
-          ...(settings.allowed_cors_destinations || []),
-          ...env_destinations,
+          ...config.settings.allowed_cors_destinations,
         ];
 
         const url = new URL(req.params['0']);
