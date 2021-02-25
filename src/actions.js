@@ -1,12 +1,12 @@
 import { GET_CONTENT } from '@plone/volto/constants/ActionTypes';
-import { settings } from '~/config';
+import config from '@plone/volto/registry';
 
 export function getProxiedExternalContent(
   url,
   request = {},
   subrequest = null,
 ) {
-  const { corsProxyPath = '/cors-proxy', host, port } = settings;
+  const { corsProxyPath = '/cors-proxy', host, port } = config.settings;
 
   const base = __SERVER__
     ? `http://${host}:${port}`
