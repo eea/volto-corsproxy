@@ -63,7 +63,7 @@ and it will make that async content available in the Redux content reducer, at
    ],
 
    "dependencies": {
-       "@eeacms/volto-corsproxy": "^1.0.0"
+       "@eeacms/volto-corsproxy": "^2.0.0"
    }
    ```
 
