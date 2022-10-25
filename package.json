@@ -1,6 +1,6 @@
 {
   "name": "@eeacms/volto-corsproxy",
-  "version": "2.1.7",
+  "version": "2.2.0",
   "description": "volto-corsproxy: Volto add-on",
   "main": "src/index.js",
   "author": "European Environment Agency: IDM2 A-Team",
