@@ -6,7 +6,7 @@ pipeline {
         NAMESPACE = "@eeacms"
         SONARQUBE_TAGS = "volto.eea.europa.eu,climate-energy.eea.europa.eu,biodiversity.europa.eu,forest.eea.europa.eu,www.eea.europa.eu-ims,sustainability.eionet.europa.eu,clms.land.copernicus.eu,industry.eea.europa.eu,water.europa.eu-freshwater,demo-www.eea.europa.eu,clmsdemo.devel6cph.eea.europa.eu,circularity.eea.europa.eu,prod-www.eea.europa.eu,water.europa.eu-marine"
         DEPENDENCIES = ""
-        VOLTO = "16.0.0-alpha.14"
+        VOLTO = "alpha"
     }
 
   stages {
@@ -41,19 +41,19 @@ pipeline {
 
           "ES lint": {
             node(label: 'docker') {
-              sh '''docker run -i --rm --name="$BUILD_TAG-eslint" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" plone/volto-addon-ci eslint'''
+              sh '''docker run -i --rm --name="$BUILD_TAG-eslint" -e VOLTO="$VOLTO" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" plone/volto-addon-ci eslint'''
             }
           },
 
           "Style lint": {
             node(label: 'docker') {
-              sh '''docker run -i --rm --name="$BUILD_TAG-stylelint" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" plone/volto-addon-ci stylelint'''
+              sh '''docker run -i --rm --name="$BUILD_TAG-stylelint" -e VOLTO="$VOLTO" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" plone/volto-addon-ci stylelint'''
             }
           },
 
           "Prettier": {
             node(label: 'docker') {
-              sh '''docker run -i --rm --name="$BUILD_TAG-prettier" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" plone/volto-addon-ci prettier'''
+              sh '''docker run -i --rm --name="$BUILD_TAG-prettier" -e VOLTO="$VOLTO" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" plone/volto-addon-ci prettier'''
             }
           }
         )
@@ -126,7 +126,7 @@ pipeline {
               script {
                 try {
                   sh '''docker pull eeacms/plone-backend; docker run --rm -d --name="$BUILD_TAG-plone" -e SITE="Plone" -e PROFILES="eea.kitkat:testing" eeacms/plone-backend'''
-                  sh '''docker pull plone/volto-addon-ci; docker run -i --name="$BUILD_TAG-cypress" --link $BUILD_TAG-plone:plone -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" -e DEPENDENCIES="$DEPENDENCIES" -e NODE_ENV=development -e VOLTO="$VOLTO" plone/volto-addon-ci cypress'''
+                  sh '''docker pull plone/volto-addon-ci; docker run -i --name="$BUILD_TAG-cypress" --link $BUILD_TAG-plone:plone -e VOLTO="$VOLTO" -e NAMESPACE="$NAMESPACE" -e GIT_NAME=$GIT_NAME -e GIT_BRANCH="$BRANCH_NAME" -e GIT_CHANGE_ID="$CHANGE_ID" -e DEPENDENCIES="$DEPENDENCIES" -e NODE_ENV=development -e VOLTO="$VOLTO" plone/volto-addon-ci cypress'''
                 } finally {
                   try {
                     sh '''rm -rf cypress-reports cypress-results cypress-coverage'''
