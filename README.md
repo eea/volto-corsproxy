@@ -56,17 +56,26 @@ and it will make that async content available in the Redux content reducer, at
 
 ## Getting started
 
-1. Create new volto project if you don't already have one:
+### Try volto-corsproxy with Docker
 
+      git clone https://github.com/eea/volto-corsproxy.git
+      cd volto-corsproxy
+      make
+      make start
+
+Go to http://localhost:3000
+
+### Add volto-corsproxy to your Volto project
+
+1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
+
+   ```Bash
+   docker compose up backend
    ```
-   $ npm install -g yo @plone/generator-volto
-   $ yo @plone/volto my-volto-project --addon @eeacms/volto-corsproxy
 
-   $ cd my-volto-project
-   $ yarn add -W @eeacms/volto-corsproxy
-   ```
+1. Start Volto frontend
 
-1. If you already have a volto project, just update `package.json`:
+* If you already have a volto project, just update `package.json`:
 
    ```JSON
    "addons": [
@@ -74,15 +83,23 @@ and it will make that async content available in the Redux content reducer, at
    ],
 
    "dependencies": {
-       "@eeacms/volto-corsproxy": "^2.0.0"
+       "@eeacms/volto-corsproxy": "*"
    }
+   ```
+
+* If not, create one:
+
+   ```
+   npm install -g yo @plone/generator-volto
+   yo @plone/volto my-volto-project --canary --addon @eeacms/volto-corsproxy
+   cd my-volto-project
    ```
 
 1. Install new add-ons and restart Volto:
 
    ```
-   $ yarn
-   $ yarn start
+   yarn
+   yarn start
    ```
 
 1. Go to http://localhost:3000
@@ -95,14 +112,14 @@ See [RELEASE.md](https://github.com/eea/volto-corsproxy/blob/master/RELEASE.md).
 
 ## How to contribute
 
-See [DEVELOP.md](DEVELOP.md).
+See [DEVELOP.md](https://github.com/eea/volto-corsproxy/blob/master/DEVELOP.md).
 
 ## Copyright and license
 
 The Initial Owner of the Original Code is European Environment Agency (EEA).
 All Rights Reserved.
 
-See [LICENSE.md](LICENSE.md) for details.
+See [LICENSE.md](https://github.com/eea/volto-corsproxy/blob/master/LICENSE.md) for details.
 
 ## Funding
 
