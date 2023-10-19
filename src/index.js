@@ -1,5 +1,5 @@
 /* eslint no-console: ["error", { allow: ["error"] }] */
-export default (config) => {
+export default function applyConfig(config) {
   const { settings } = config;
   const corsProxyPath = settings.corsProxyPath || '/cors-proxy';
 
@@ -54,4 +54,4 @@ export default (config) => {
   }
 
   return config;
-};
+}
