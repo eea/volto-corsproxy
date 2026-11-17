@@ -1,198 +1,25 @@
 # volto-corsproxy
 
 [![Releases](https://img.shields.io/github/v/release/eea/volto-corsproxy)](https://github.com/eea/volto-corsproxy/releases)
-
 [![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-corsproxy%2Fmaster&subject=master)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-corsproxy/job/master/display/redirect)
-[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy)
 [![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy)
-[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy)
-[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy)
-
-[![Pipeline](https://ci.eionet.europa.eu/buildStatus/icon?job=volto-addons%2Fvolto-corsproxy%2Fdevelop&subject=develop)](https://ci.eionet.europa.eu/view/Github/job/volto-addons/job/volto-corsproxy/job/develop/display/redirect)
-[![Lines of Code](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&branch=develop&metric=ncloc)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy&branch=develop)
-[![Coverage](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&branch=develop&metric=coverage)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy&branch=develop)
-[![Bugs](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&branch=develop&metric=bugs)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy&branch=develop)
-[![Duplicated Lines (%)](https://sonarqube.eea.europa.eu/api/project_badges/measure?project=volto-corsproxy&branch=develop&metric=duplicated_lines_density)](https://sonarqube.eea.europa.eu/dashboard?id=volto-corsproxy&branch=develop)
 
 [Volto](https://github.com/plone/volto) add-on
 
-## Features
+The add-on package lives in [`packages/volto-corsproxy`](packages/volto-corsproxy),
+its [README](packages/volto-corsproxy/README.md) documents installation and usage.
 
-###
+## Development
 
-This package enables fetching data from third-party servers through the Volto
-HTTP server, this way bypassing any CORS security restrictions imposed by the
-browser.
-
-The way it does this is by providing a pass-through CORS proxy server on the
-path (configurable) `/cors-proxy` path. For example, any requests made to the
-URL `http://localhost:3000/cors-proxy/http://example.com/` will be piped to
-the http://example.com website, through the Volto node server.
-
-As you wouldn't want to provide an open proxy, all proxied destinations need to
-be configured either via `settings.allowed_cors_destinations` (which takes
-a list of hostnames) or an environment variable called
-`RAZZLE_ALLOWED_CORS_DESTINATIONS` (where you need to provide a comma-separated
-list of hostnames).
-
-For example:
-
-```
-settings.allowed_cors_destinations = ['eea.europa.eu', 'plone.org']
-
-```
-
-or:
-
-```
-RAZZLE_ALLOWED_CORS_DESTINATIONS=eea.europa.eu,plone.org yarn start
-```
-
-As a convenience feature for dealing with third-party API endpoints, there's
-a new action available, `getProxiedExternalContent`, somewhat similar to
-Volto's `getContent`. Call it like: `getProxiedExternalContent(thirdpartyurl)`
-and it will make that async content available in the Redux content reducer, at
-`store.content.subrequests[thirdpartyurl]`.
-
-## Getting started
-
-### Try volto-corsproxy with Docker
-
-      git clone https://github.com/eea/volto-corsproxy.git
-      cd volto-corsproxy
-      make
-      make start
-
-Go to http://localhost:3000
-
-`make start` now defaults to Volto 18. To run the same setup against Volto 17, use:
-
-      VOLTO_VERSION=17 make
-      VOLTO_VERSION=17 make start
-
-### Add volto-corsproxy to your Volto project
-
-1. Make sure you have a [Plone backend](https://plone.org/download) up-and-running at http://localhost:8080/Plone
-
-   ```Bash
-   docker compose up backend
-   ```
-
-1. Start Volto frontend
-
-* If you already have a volto project, just update `package.json`:
-
-   ```JSON
-   "dependencies": {
-       "@eeacms/volto-corsproxy": "*"
-   }
-   ```
-
-   and `volto.config.js`:
-
-   ```JavaScript
-   const addons = ['@eeacms/volto-corsproxy'];
-   ```
-
-* If not, create one with Cookieplone, as recommended by the official Plone documentation for Volto 18+:
-
-   ```
-   uvx cookieplone project
-   cd project-title
-   ```
-
-1. Install or update dependencies, then start the project:
-
-   ```
-   make install
-   ```
-
-   For a Cookieplone project, start the backend and frontend in separate terminals:
-
-   ```
-   make backend-start
-   make frontend-start
-   ```
-
-   For a legacy Volto 17 project, install the package with `yarn` and restart the frontend as usual.
-
-1. Go to http://localhost:3000
-
-1. Happy editing!
+See [DEVELOP.md](DEVELOP.md).
 
 ## Release
 
-See [RELEASE.md](https://github.com/eea/volto-corsproxy/blob/master/RELEASE.md).
+See [RELEASE.md](RELEASE.md).
 
-## How to contribute
+## License
 
-See [DEVELOP.md](https://github.com/eea/volto-corsproxy/blob/master/DEVELOP.md).
-
-## Secret Scanning
-
-This repository uses the Betterleaks GitHub Action to scan the current
-repository content on every push and pull request. The scan uses the rules in
-`.gitleaks.toml` and uploads a `betterleaks-report` artifact when a finding is
-detected.
-
-If the optional SMTP secrets are configured, failed scans also send an email to
-the last commit committer. The workflow expects these repository or
-organization secrets:
-
-- `SMTP_URL`
-- `SMTP_PORT` (optional, defaults to `25`)
-- `SMTP_EMAIL`
-- `SMTP_PASSWORD` (optional if the SMTP server does not require authentication)
-
-Port `465` is sent with direct TLS; other ports use the default SMTP handshake.
-The email includes a short finding summary from the redacted Betterleaks report,
-including the redacted matched line from each finding.
-
-There are three common outcomes:
-
-1. **Everything is OK.** The `Betterleaks / Scan for secrets` check is green and
-   no action is needed. Regular references to runtime values are OK, for example:
-
-   ```js
-   const tokenFromCookie = req.universalCookies.get('auth_token');
-   ```
-
-2. **A real secret was found.** The check is red and the workflow log asks you to
-   download the `betterleaks-report` artifact. Open the artifact from the GitHub
-   Actions run and check the reported file, line and rule. Remove the committed
-   value, move it to the proper secret store, and rotate it if it was exposed.
-   A report entry looks like this:
-
-   ```json
-   {
-     "RuleID": "secret-literal-assignment",
-     "File": "src/config.js",
-     "StartLine": 12,
-     "Secret": "[REDACTED]"
-   }
-   ```
-
-3. **The finding is a false positive.** Keep the value only if it is clearly not
-   sensitive, such as a test fixture, placeholder, or public example. Add
-   `betterleaks:allow` on the same line and include a short explanation in the
-   pull request.
-
-   ```js
-   const testPassword = 'admin'; //betterleaks:allow
-   ```
-
-   ```yaml
-   password: "admin" #betterleaks:allow
-   ```
-
-Do not add `betterleaks:allow` to real credentials.
-
-## Copyright and license
-
-The Initial Owner of the Original Code is European Environment Agency (EEA).
-All Rights Reserved.
-
-See [LICENSE.md](https://github.com/eea/volto-corsproxy/blob/master/LICENSE.md) for details.
+See [LICENSE.md](LICENSE.md) for details.
 
 ## Funding
 
