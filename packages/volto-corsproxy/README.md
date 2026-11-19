@@ -44,6 +44,22 @@ Volto's `getContent`. Call it like: `getProxiedExternalContent(thirdpartyurl)`
 and it will make that async content available in the Redux content reducer, at
 `store.content.subrequests[thirdpartyurl]`.
 
+## Upgrade
+
+### Upgrading to 6.x
+
+> This version requires `Volto 18` or `Volto 19` and Node.js 22.
+
+The add-on keeps the same API, so upgrading from 5.x on Volto 18 needs no code changes. The release adds Volto 19 support and moves the repository to the Volto 19 layout, where the published package lives in `packages/volto-corsproxy`.
+
+#### Breaking changes
+
+- **Node.js 22 or newer is required** (`engines.node >= 22`), 5.x declared no engine.
+- **React 18 is required.** The package declares `react` and `react-dom` as `^18.2.0` peers, 5.x declared no peers.
+- **The package no longer ships the Jest setup.** `jest-addon.config.js` and `jest.setup.js` were removed in favour of Vitest, so a Volto 18 project that still runs the Jest harness has to keep its own copy.
+
+The package declares no runtime `dependencies` in either 5.x or 6.x, so no dependency is added or removed by the upgrade.
+
 ## Requirements
 
 ### Backend
